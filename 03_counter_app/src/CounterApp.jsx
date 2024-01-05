@@ -22,7 +22,7 @@ export const CounterApp = ({value})=>{
     return (
         <>
             <h1>CounterApp</h1>
-            <h2> { counter } </h2>
+            <h2>{counter}</h2>
 
             <button onClick={(event) => {handleAdd(event)}}>
                 +1
@@ -30,7 +30,7 @@ export const CounterApp = ({value})=>{
             <button onClick={(event) => {handleSubtract(event)}}>
                 -1
             </button>
-            <button onClick={(event) => {handleReset(event)}}>
+            <button id="btn-reset" onClick={(event) => {handleReset(event)}}>
                 Reset
             </button>
         </>

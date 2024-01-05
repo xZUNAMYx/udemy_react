@@ -4,12 +4,14 @@ const getName = (name)=>{
     return name;
 }
 
-export const AndresApp = ({title, subTitle}) =>{
+export const AndresApp = ({title, subTitle, name}) =>{
     return (
     //   Sinonimo del fragmento
         <>  
-            <h1>{title}</h1>
+            <h1 data-testid='test-title'> {title} </h1>
             <p>{subTitle}</p>
+            <p>{subTitle}</p>
+            <p>{name}</p>
         </>
     )
 }
@@ -20,6 +22,7 @@ AndresApp.propTypes = {
 }
 
 AndresApp.defaultProps = {
-    title: 'No hay titulo',
+    // title: 'No hay titulo',
     subTitle: 'No hay subtitulo',
+    name: 'Andres Alvarez',
 }
