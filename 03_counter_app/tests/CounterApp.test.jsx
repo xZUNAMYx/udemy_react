@@ -35,7 +35,7 @@ describe('Pruebas en <CounterApp />', () => {
         fireEvent.click(screen.getByText('+1'));
         // fireEvent.click(screen.getByText('Reset'));
         fireEvent.click(document.querySelector('#btn-reset'));
-        expect(screen.getByText(initialValue)).toBeTruthy();
+        expect(screen.getByText(initialValue)).toBeTruthy(); 
     });
         
 });
