@@ -10,10 +10,15 @@ import './index.css'
 // import { Memorize } from './06-memos/Memorize.jsx'
 // import { MemoHook } from './06-memos/MemorizeHooks.jsx'
 // import { CallbackHook } from './06-memos/CallbackHook.jsx'
-import { Padre } from './07-tarea-memo/Padre.jsx'
+// import { Padre } from './07-tarea-memo/Padre.jsx';
+
+// import "./08-useReducer/intro-reducer.js";
+
+import { TodoApp } from './08-useReducer/TodoApp';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-    <Padre />
-  // </React.StrictMode>,
+//   // <React.StrictMode>
+    <TodoApp />
+//   // </React.StrictMode>,
 )
