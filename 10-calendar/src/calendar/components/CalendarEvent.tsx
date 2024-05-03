@@ -1,11 +1,20 @@
+interface Event {
+    user: {
+        _id: string,
+        name: string,
+    };
+    title: string;  
+}
+ 
+interface Props {
+    event: Event
+}
 
-
-
-export const CalendarEvent = ( { event } ) => {
+export const CalendarEvent = ( { event } : Props ) => {
     const { title, user} = event;
 
     return (
-        <>s
+        <>
             <strong>{ title }</strong>
             <strong> - { user.name }</strong>
         </>
