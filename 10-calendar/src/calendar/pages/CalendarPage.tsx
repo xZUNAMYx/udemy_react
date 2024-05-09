@@ -1,29 +1,22 @@
+import { useState } from 'react';
 import { Calendar} from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { addHours } from 'date-fns';
-import { CalendarEvent, CalendarModal, Navbar } from "../"
+
+import { ButtonAddNew, ButtonDelete, CalendarEvent, CalendarModal, Navbar } from "../"
 import { localizer, getMessagesEs } from '../../helpers';
-import { useState } from 'react';
+import { useUiStore, useCalendarStore } from '../../hooks';
 
-
-const events = [{
-  title: 'Horario de clases',
-  notes: 'Grupo 1',
-  start: new Date(),
-  end: addHours( new Date(), 2),
-  user: {
-    _id: '123',
-    name: 'Andres',
-  }
-}]
 
 export const CalendarPage = () => {
+  //TODO: con redux
+  const { openDateModal } = useUiStore();
+  const { events, setActiveEvent } = useCalendarStore() ;
+  
   const [lastView, setLastView] = useState( localStorage.getItem('lastView') || 'week');
 
   const eventStyleGetter = ( event: {}, start: Date, end: Date, isSelected: boolean )=>{
     // TODO: Verificar si se renderiza varias veces
-    // console.log({ event, start, end, isSelected });
 
     const style = {
       backgroundColor: 'green',
@@ -38,11 +31,13 @@ export const CalendarPage = () => {
   }
 
   const onDoubleClick = ( event ) => {
+    openDateModal();
     console.log( { doubleClick: event })
   }
 
+  // TODO: Pasar la actual que es este evento y saber a cual se le dio click
   const onSelect = ( event ) => {
-    console.log( { click: event })
+    setActiveEvent( event );
   }
 
   const onViewChanged = ( event ) => {
@@ -73,6 +68,9 @@ export const CalendarPage = () => {
       />
 
       <CalendarModal />
+
+      <ButtonAddNew />
+      <ButtonDelete />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { addHours, addYears, differenceInSeconds, setHours, setMinutes } from 'date-fns';
 
@@ -9,6 +9,8 @@ import Modal from 'react-modal';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es } from 'date-fns/locale/es';
+import { onCloseDateModal } from '../../stores';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 registerLocale('es', es);
 
@@ -26,12 +28,22 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
-    const [isModalOpen, setIsModalOpen] = useState(true);
     const [formSubmitted, setFormSubmitted] = useState(false);
 
+    //TODO: con redux
+    const { isDateModalOpen, closeDateModal } = useUiStore()
+    const { activeEvent, startSavingEvent } = useCalendarStore();
+
+    useEffect(() => {
+        if( activeEvent !== null){
+            setFormValues({ ...activeEvent })
+        }
+    }, [ activeEvent ]);
+
+    //TODO: como lograr con el store
     const [formValues, setFormValues] = useState({
-        title: 'Class A1',
-        notes: 'Unidad 22',
+        title: '',
+        notes: '',
         start: new Date(),
         end: addHours( new Date(), 2),
     });
@@ -60,11 +72,11 @@ export const CalendarModal = () => {
     }
 
     const onCloseModal = ()=> {
+        closeDateModal();
         console.log('Cerrando modal');
-        setIsModalOpen(false)
     }
 
-    const onSubmit = ( event ) =>{
+    const onSubmit = async ( event ) =>{
         event.preventDefault();
         setFormSubmitted(true);
 
@@ -81,13 +93,16 @@ export const CalendarModal = () => {
         console.log(formValues);
 
         //TODO: 
+        await startSavingEvent( formValues );
+        closeDateModal();
+        setFormSubmitted( false );
         // Remover errores en pantalla
         // Cerrar modal
     }
 
     return (
         <Modal
-            isOpen= { isModalOpen }
+            isOpen= { isDateModalOpen }
             onRequestClose={ onCloseModal }
             style={ customStyles }
             className='modal'
@@ -124,8 +139,9 @@ export const CalendarModal = () => {
                         showTimeSelect
                         locale='es'
                         timeCaption='Hora'
-                        minTime={setHours(setMinutes(new Date(), formValues.start.getMinutes()), formValues.start.getHours())}
-                        maxTime={setHours(setMinutes(addYears(new Date(), 1000) , 30), 23)}
+                        //TODO: verificar porque manda error si lo hago con el store
+                        // minTime={setHours(setMinutes(new Date(), formValues.start.getMinutes()), formValues.start.getHours())}
+                        // maxTime={setHours(setMinutes(addYears(new Date(), 1000) , 30), 23)}
                     >
                     </DatePicker>
                 </div>
