@@ -1,4 +1,5 @@
-const express = require('express');
+// const express = require('express'); 
+import express from 'express'; //TODO: forma de usar express con typescript 
 require('dotenv').config();
 const cors = require('cors');
 const { dbConection } = require('./database/config'); 
@@ -26,6 +27,7 @@ app.use( express.json() );
 
 //Rutas
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/events', require('./routes/events'));
 // TODO: CRUD: Eventos
 
 

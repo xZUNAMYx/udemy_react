@@ -1,4 +1,4 @@
-const { response } = require('express');
+import { response } from 'express';
 const jwt = require('jsonwebtoken');
 
 const validarJWT = (req: any, res = response, next: any) => {
